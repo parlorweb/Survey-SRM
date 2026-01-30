@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>County Survey CRM</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div>
+      <p class="eyebrow">County Survey Operations</p>
+      <h1>Survey Flow Console</h1>
+      <p>Manage surveys through review stages with live updates and file tracking.</p>
+    </div>
+    <div class="user-actions" id="user-actions"></div>
+  </header>
+
+  <main>
+    <section class="auth" id="auth-section">
+      <div class="card">
+        <h2>Sign in</h2>
+        <form id="login-form">
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+          <button type="submit">Sign in</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Create account</h2>
+        <form id="register-form">
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" minlength="6" required />
+          </label>
+          <button type="submit">Sign up</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="app hidden" id="app-section">
+      <div class="toolbar">
+        <div>
+          <button id="new-survey">New Survey</button>
+        </div>
+        <div class="search-controls">
+          <input type="search" id="search" placeholder="Search applicant, parcel, or type" />
+          <select id="stage-filter">
+            <option value="">All stages</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-panel hidden" id="survey-form-panel">
+        <h2 id="form-title">New survey</h2>
+        <form id="survey-form">
+          <div class="grid">
+            <label>
+              Applicant name
+              <input type="text" name="applicantName" required />
+            </label>
+            <label>
+              Applicant email
+              <input type="email" name="applicantEmail" required />
+            </label>
+            <label>
+              Applicant phone
+              <input type="tel" name="applicantPhone" required />
+            </label>
+            <label>
+              Survey type
+              <select name="surveyType" required>
+                <option value="">Select type</option>
+                <option>Boundary</option>
+                <option>Partition</option>
+                <option>Subdivision</option>
+                <option>Lot Line Adjustment</option>
+                <option>Topographic</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              Parcel number
+              <input type="text" name="parcelNumber" required />
+            </label>
+            <label>
+              Submitted date
+              <input type="date" name="submittedDate" required />
+            </label>
+          </div>
+          <label>
+            Survey PDF
+            <input type="file" name="surveyPdf" accept="application/pdf" />
+            <span class="helper-text">Upload the primary survey PDF for this record.</span>
+          </label>
+          <label>
+            Replace PDF (optional)
+            <input type="file" name="replacePdf" accept="application/pdf" />
+            <span class="helper-text">Use to replace the existing PDF when editing.</span>
+          </label>
+          <label>
+            Notes
+            <textarea name="notes" rows="3"></textarea>
+          </label>
+          <div class="form-actions">
+            <button type="submit">Save survey</button>
+            <button type="button" class="secondary" id="cancel-form">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <section class="board" id="board"></section>
+      <section class="activity-panel">
+        <h2>Team Updates</h2>
+        <p class="survey-meta">Recent stage changes and file updates.</p>
+        <div id="activity-log" class="activity-log"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
