@@ -175,6 +175,24 @@ button.secondary {
   font-size: 0.85rem;
 }
 
+.survey-actions button:disabled {
+  background: #d6dbe6;
+  color: #7a859d;
+  cursor: not-allowed;
+}
+
+.empty-state {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(31, 42, 68, 0.08);
+}
+
+.empty-state h3 {
+  margin-top: 0;
+}
+
 @media (max-width: 900px) {
   .toolbar {
     flex-direction: column;

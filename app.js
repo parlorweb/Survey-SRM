@@ -109,6 +109,22 @@ function renderBoard() {
     return acc;
   }, {});
 
+  if (filtered.length === 0) {
+    board.innerHTML = `
+      <div class="empty-state">
+        <h3>No surveys found</h3>
+        <p>
+          ${
+            searchTerm || stageSelection
+              ? "Try adjusting your search or filters."
+              : "Add a new survey to begin tracking review stages."
+          }
+        </p>
+      </div>
+    `;
+    return;
+  }
+
   board.innerHTML = "";
   STAGES.forEach((stage) => {
     const column = document.createElement("div");
@@ -120,6 +136,7 @@ function renderBoard() {
     grouped[stage].forEach((survey) => {
       const card = document.createElement("div");
       card.className = "survey-card";
+      const isComplete = survey.stage === "Ready for Print";
       card.innerHTML = `
         <strong>${survey.applicantName}</strong>
         <p class="survey-meta">${survey.surveyType} • Parcel ${survey.parcelNumber}</p>
@@ -127,8 +144,10 @@ function renderBoard() {
         <p>${survey.notes || "No notes"}</p>
         <p class="survey-meta">Contact: ${survey.applicantEmail} • ${survey.applicantPhone}</p>
         <div class="survey-actions">
-          <button data-action="next" data-id="${survey.id}">
-            ${survey.stage === "Ready for Print" ? "Complete" : "Next"}
+          <button data-action="next" data-id="${survey.id}" ${
+            isComplete ? "disabled" : ""
+          }>
+            ${isComplete ? "Complete" : "Next"}
           </button>
           <button class="secondary" data-action="edit" data-id="${survey.id}">Edit</button>
           <button class="secondary" data-action="delete" data-id="${survey.id}">Delete</button>
@@ -220,6 +239,12 @@ function handleBoardClick(event) {
   }
 
   if (action === "delete") {
+    const confirmed = confirm(
+      `Delete the survey for ${survey.applicantName}? This cannot be undone.`
+    );
+    if (!confirmed) {
+      return;
+    }
     const updated = surveys.filter((item) => item.id !== surveyId);
     setSurveys(updated);
     renderBoard();
